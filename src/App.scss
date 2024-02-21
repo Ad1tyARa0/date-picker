@@ -1,0 +1,8 @@
+@import "src/sass/colors";
+@import "src/sass/variables";
+
+.app {
+  @include display-flex-center;
+    
+  height: 100vh;
+}

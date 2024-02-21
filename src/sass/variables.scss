@@ -1,0 +1,15 @@
+@mixin display-flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin select-none {
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -webkit-user-select: none; /* Safari */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
