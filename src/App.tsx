@@ -5,7 +5,7 @@ import './sass/globals.scss';
 function App() {
 
   const handleChangeDates = (payload: Array<Array<Date>>) => {
-    // console.log(payload);
+    console.log(payload);
   }
 
   const PREDEFINED_RANGES = [
