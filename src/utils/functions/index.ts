@@ -87,3 +87,35 @@ export const isSameDate = (date1: Date, date2: Date): boolean => {
     date1.getDate() === date2.getDate()
   );
 }
+
+export const getSelectedDates = (startDate: Date | null, endDate: Date | null): Date[] => {
+  const selectedDates: Date[] = [];
+
+  if (startDate && endDate) {
+    const currentDay = new Date(startDate);
+    while (currentDay <= endDate) {
+      selectedDates.push(new Date(currentDay));
+      currentDay.setDate(currentDay.getDate() + 1);
+    }
+  };
+
+  return selectedDates;
+}
+
+export const convertDates = (dates: Array<Date>): Array<string> => {
+  return dates.map(e => {
+    const year = e.getFullYear();
+    const month = e.getMonth();
+    const date = e.getDate();
+
+    return `${year}-${month}-${date}`
+  })
+}
+
+export const convertDate = (payload: Date): string => {
+  const year = payload.getFullYear();
+  const month = payload.getMonth();
+  const date = payload.getDate();
+
+  return `${year}-${month}-${date}`
+}

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-// import { PiArrowSquareRightFill } from "react-icons/pi"
-// import { PiArrowSquareLeftFill } from "react-icons/pi";
+import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 
+// Constants.
+import { MONTH_MAPPING_SHORT } from "../../utils/constants";
+
+// Components.
+import { CustomDropdown } from "../custom-dropdown/CustomDropdown";
+
+// Utils
+import { convertDate, convertDates, generateMonthOptions, generateYearOptions, getDate, getNumberOfDaysInMonth, getRange, getSortedDays, isSameDate, isWeekday } from "../../utils/functions";
 
 // SCSS.
 import "./DatePicker.scss";
-import { MONTH_MAPPING, MONTH_MAPPING_SHORT } from "../../utils/constants";
-import { generateMonthOptions, generateYearOptions, getDate, getNumberOfDaysInMonth, getRange, getSortedDays, isSameDate, isWeekday } from "../../utils/functions";
-import { CustomDropdown } from "../custom-dropdown/CustomDropdown";
 
 const css_prefix = "dp__";
 
@@ -65,8 +68,6 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
     }
   };
 
-  generateMonthOptions();
-
   return (
     <div className={`${css_prefix}main`}>
       <div className={`${css_prefix}header`}>
@@ -113,6 +114,9 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
               isSameEnd = isSameDate(date, endDate);
             }
 
+            const convertedDates = convertDates(selectedDates);
+            const convertedDate = convertDate(date);
+
             return (
               <div
                 key={e}
@@ -124,8 +128,7 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
                 className={`${css_prefix}date 
                   ${!checkWeekday ? css_prefix + 'date-disabled' : ''}
                   ${isSameStart || isSameEnd ? css_prefix + 'date-selected' : ''}
-                  ${isSameEnd ? css_prefix + 'date-selected' : ''}
-                  ${selectedDates.some(e => e.getTime() === date.getTime()) && date > startDate! && date < endDate! && isWeekday(date) ? css_prefix + 'date-highlighted' : ''}
+                  ${isSameEnd ? css_prefix + 'date-selected' : (convertedDates.includes(convertedDate) || selectedDates.some(e => e.getTime() === date.getTime())) && date > startDate! && date < endDate! && isWeekday(date) ? css_prefix + 'date-highlighted' : ''}
                 `}
               >
                 {e}

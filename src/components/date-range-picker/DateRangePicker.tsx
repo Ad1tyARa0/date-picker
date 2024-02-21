@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 
+// Components.
+import { DatePicker } from "../date-picker/DatePicker";
+
+// Utils.
+import { getSelectedDates, isWeekday } from "../../utils/functions";
+
 // SCSS.
 import "./DateRangePicker.scss";
-import { DatePicker } from "../date-picker/DatePicker";
-import { isWeekday } from "../../utils/functions";
 
 const css_prefix = "drp__";
 
@@ -23,10 +27,23 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [nextYear, setNextYear] = useState<number>(new Date().getFullYear());
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [startDateSelected, setStartDateSelected] = useState<boolean>(true);
   const [selectedDates, setSelectedDates] = useState<Array<Date>>([]);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const weekendDates = selectedDates.filter(e => !isWeekday(e));
+
+      handleChange([[startDate, endDate], weekendDates])
+    };
+  }, [startDate, endDate, selectedDates]);
+
+  useEffect(() => {
+    const result = getSelectedDates(startDate, endDate);
+    setSelectedDates(result);
+  }, [startDate, endDate]);
 
   const handleChangeSelectedDates = (selectedDate: Date) => {
     if (startDateSelected) {
@@ -36,29 +53,15 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
     }
 
     setStartDateSelected(!startDateSelected);
+  };
 
-  }
-  useEffect(() => {
-    if (startDate && endDate) {
-      const weekendDates = selectedDates.filter(e => !isWeekday(e));
-
-      handleChange([[startDate, endDate], weekendDates])
-    }
-  }, [startDate, endDate, selectedDates])
-
-  useEffect(() => {
-    const selectedDates: Date[] = [];
-
-    if (startDate && endDate) {
-      const currentDay = new Date(startDate);
-      while (currentDay <= endDate) {
-        selectedDates.push(new Date(currentDay));
-        currentDay.setDate(currentDay.getDate() + 1);
-      }
-    }
-
-    setSelectedDates(selectedDates);
-  }, [startDate, endDate])
+  const handleClickDateRangeActionButtons = (payload: number) => {
+    const currentDate = new Date();
+    const newDate = new Date(currentDate);
+    const resultDate = new Date(newDate.setDate(currentDate.getDate() - payload));
+    setStartDate(resultDate);
+    setEndDate(new Date());
+  };
 
   return (
     <div className={`${css_prefix}main`}>
@@ -95,7 +98,7 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
       <div className={`${css_prefix}date-range-actions`}>
         {predefinedRanges.map((e) => {
           return (
-            <div key={e.id} className={`${css_prefix}date-range-action-item`}>
+            <div key={e.id} className={`${css_prefix}date-range-action-item`} onClick={() => handleClickDateRangeActionButtons(e.value)}>
               {e.title}
             </div>
           )

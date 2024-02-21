@@ -5,7 +5,7 @@ import './sass/globals.scss';
 function App() {
 
   const handleChangeDates = (payload: Array<Array<Date>>) => {
-    console.log(payload);
+    // console.log(payload);
   }
 
   const PREDEFINED_RANGES = [
@@ -17,19 +17,19 @@ function App() {
 
     {
       title: 'Yesterday',
-      value: -1,
+      value: 1,
       id: 1,
     },
 
     {
       title: 'Last 7 Days',
-      value: -7,
+      value: 7,
       id: 2,
     },
 
     {
       title: 'Last 30 Days',
-      value: -30,
+      value: 30,
       id: 3,
     },
   ]
