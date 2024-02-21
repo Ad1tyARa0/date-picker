@@ -1,4 +1,4 @@
-import { DAYS_SHORT, MONTH_MAPPING } from "../constants";
+import { DAYS_SHORT, MONTH_MAPPING, MONTH_MAPPING_SHORT } from "../constants";
 import { DropdownOptionsType } from "../types";
 
 export const isWeekday = (date: Date): boolean => {
@@ -9,7 +9,6 @@ export const isWeekday = (date: Date): boolean => {
   }
 
   return true;
-  // return dayOfWeek === 0 || dayOfWeek === 6; 
 }
 
 export const getWeekdaysInMonth = (year: number, month: number): Date[] => {
@@ -78,7 +77,7 @@ export const generateMonthOptions = (): DropdownOptionsType[] => {
 
 export const getDate = (year: number, month: number, day: number): Date => {
   return new Date(year, month, day);
-} 
+}
 
 export const isSameDate = (date1: Date, date2: Date): boolean => {
   return (
@@ -118,4 +117,19 @@ export const convertDate = (payload: Date): string => {
   const date = payload.getDate();
 
   return `${year}-${month}-${date}`
+}
+
+export const convertDateToLocalString = (payload: Date): string => {
+  const year = payload.getFullYear();
+  const month = payload.getMonth();
+  const date = payload.getDate();
+
+  return `${MONTH_MAPPING_SHORT[month]} ${date} ${year}`
+}
+
+export const isEndDateAfterStartDate = (startDate: Date, endDate: Date): boolean => {
+  const startYearMonthDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+  const endYearMonthDay = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+
+  return endYearMonthDay >= startYearMonthDay;
 }

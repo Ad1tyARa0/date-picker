@@ -3,6 +3,41 @@
 
 $css_prefix: ".drp__";
 
+
+#{$css_prefix}body {
+  display: flex;
+  flex-direction: column;
+}
+
+#{$css_prefix}date-range-input {
+  display: flex;
+  box-shadow: 0 0 2px 0 rgba(#000, .2), 0 5px 10px 0 rgba(#000, .1);
+  border-radius: 10px;
+  background-color: $--c-bg-tertiary;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+}
+
+#{$css_prefix}date-range-input-main {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+#{$css_prefix}date-range-calendar-icon {
+  @include display-flex-center;
+
+  width: fit-content;
+  font-size: 20px;
+}
+
+#{$css_prefix}date-range-input-icon {
+  @include display-flex-center;
+
+  margin: 0 10px;
+}
+
 #{$css_prefix}main{
   display: flex;
   flex-direction: column;
@@ -10,6 +45,16 @@ $css_prefix: ".drp__";
   border-radius: 10px;
   background-color: $--c-bg-tertiary;
   padding: 10px;
+}
+
+#{$css_prefix}main-shown {
+  opacity: 1;
+  transition: opacity 500ms ease;
+}
+
+#{$css_prefix}main-hidden {
+  opacity: 0;
+  transition: opacity 500ms ease;
 }
 
 #{$css_prefix}date-range-container {
