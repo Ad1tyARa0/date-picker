@@ -3,31 +3,26 @@ import React, { useEffect, useState } from "react";
 // SCSS.
 import "./DateRangePicker.scss";
 import { DatePicker } from "../date-picker/DatePicker";
+import { isWeekday } from "../../utils/functions";
 
 const css_prefix = "drp__";
 
 // Component props.
-interface DateRangePickerProps { }
+interface DateRangePickerProps {
+  handleChange: (payload: Array<Array<Date>>) => void;
+}
 
-const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = () => {
-  const [startMonth, setStartMonth] = useState<number>(new Date().getMonth());
-  const [startYear, setStartYear] = useState<number>(new Date().getFullYear());
-
-  const [endMonth, setEndMonth] = useState<number>(startMonth + 1);
-  const [endYear, setEndYear] = useState<number>(new Date().getFullYear());
-
-  // const currentDate = new Date();
+const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = ({
+  handleChange,
+}) => {
+  const [month, setMonth] = useState<number>(new Date().getMonth());
+  const [year, setYear] = useState<number>(new Date().getFullYear());
   const [startDate, setStartDate] = useState<Date | null>(new Date());
-  // const nextDayDate = new Date(currentDate).setDate(currentDate.getDate() + 1);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [startDateSelected, setStartDateSelected] = useState<boolean>(true);
   const [selectedDates, setSelectedDates] = useState<Array<Date>>([]);
 
-  console.log(selectedDates);
-
   const handleChangeSelectedDates = (selectedDate: Date) => {
-    console.log(selectedDate);
-
     if (startDateSelected) {
       setStartDate(selectedDate);
     } else {
@@ -35,10 +30,16 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
     }
 
     setStartDateSelected(!startDateSelected);
-    // const dates = getSelectedDatesInRange();
-    // console.log(dates);
-  }
 
+  }
+  useEffect(() => {
+    if (startDate && endDate) {
+      const weekendDates = selectedDates.filter(e => !isWeekday(e));
+      
+      handleChange([[startDate, endDate], weekendDates])
+    }
+  }, [startDate, endDate, selectedDates])
+  
   useEffect(() => {
       const selectedDates: Date[] = [];
 
@@ -64,10 +65,10 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
         <DatePicker
           startDate={startDate}
           // selectStartDate={handleClickSelectStartDate}
-          month={startMonth}
-          setMonth={setStartMonth}
-          year={startYear}
-          setYear={setStartYear}
+          month={month}
+          setMonth={setMonth}
+          year={year}
+          setYear={setYear}
           endDate={endDate}
           handleChangeSelectedDates={handleChangeSelectedDates}
           selectedDates={selectedDates}

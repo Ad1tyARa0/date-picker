@@ -35,9 +35,6 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
   handleChangeSelectedDates,
   selectedDates,
 }) => {
-  // const [month, setMonth] = useState<number>(new Date().getMonth());
-  // const [year, setYear] = useState<number>(new Date().getFullYear());
-
   const checkIfDateIsWeekday = (date: number): boolean => {
     return isWeekday(new Date(year, month, date));
   }
@@ -119,7 +116,11 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
             return (
               <div
                 key={e}
-                onClick={() => handleChangeSelectedDates(date)} 
+                onClick={() => {
+                  if (isWeekday(date)) {
+                    handleChangeSelectedDates(date)
+                  }
+                }} 
                 className={`${css_prefix}date 
                   ${!checkWeekday ? css_prefix + 'date-disabled' : ''}
                   ${isSameStart || isSameEnd ? css_prefix + 'date-selected' : ''}
