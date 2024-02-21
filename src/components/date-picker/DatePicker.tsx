@@ -127,8 +127,7 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
                 }} 
                 className={`${css_prefix}date 
                   ${!checkWeekday ? css_prefix + 'date-disabled' : ''}
-                  ${isSameStart || isSameEnd ? css_prefix + 'date-selected' : ''}
-                  ${isSameEnd ? css_prefix + 'date-selected' : (convertedDates.includes(convertedDate) || selectedDates.some(e => e.getTime() === date.getTime())) && date > startDate! && date < endDate! && isWeekday(date) ? css_prefix + 'date-highlighted' : ''}
+                  ${isSameStart || isSameEnd ? css_prefix + 'date-selected' : (convertedDates.includes(convertedDate) || selectedDates.some(e => e.getTime() === date.getTime())) && date > startDate! && date < endDate! && isWeekday(date) ? css_prefix + 'date-highlighted' : ''}
                 `}
               >
                 {e}

@@ -1,11 +1,14 @@
 import React, { useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
+// Custom Hooks.
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+
+// Types.
+import { DropdownOptionsType } from "../../utils/types";
 
 // SCSS.
 import "./CustomDropdown.scss";
-import { DropdownOptionsType } from "../../utils/types";
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 const css_prefix = "cd__";
 

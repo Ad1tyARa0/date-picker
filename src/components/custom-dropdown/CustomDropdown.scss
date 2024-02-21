@@ -4,11 +4,7 @@
 $css_prefix: ".cd__";
 
 #{$css_prefix}main{
-	// display: flex;
-	// align-items: center;
-	// justify-content: center;
 	border: 0;
-	// background-color:#FFF;
 	border-radius: 5px;
 	box-shadow: 0 0 2px 0 rgba(#000,.25), 0 0 10px 0 rgba(#000, .15);
   padding: 5px 10px;
@@ -53,12 +49,10 @@ $css_prefix: ".cd__";
 }
 
 #{$css_prefix}option-item-selected {
-  // color: $--c-text-primary;
   background-color: $--c-theme-primary;
 }
 
 #{$css_prefix}option-item {
-  // border-bottom: 1px solid black;
   padding: 5px 10px;
   cursor: pointer;
   

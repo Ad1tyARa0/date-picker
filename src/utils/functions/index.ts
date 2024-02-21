@@ -11,22 +11,6 @@ export const isWeekday = (date: Date): boolean => {
   return true;
 }
 
-export const getWeekdaysInMonth = (year: number, month: number): Date[] => {
-  const dates: Date[] = [];
-
-  const firstOfMonth = new Date(year, month - 1, 1);
-
-  for (let i = 0; i <= 31; i++) {
-    const d = new Date(firstOfMonth.setDate(i + 1));
-
-    if (isWeekday(d)) {
-      dates.push(d);
-    }
-  }
-
-  return dates;
-}
-
 export const getNumberOfDaysInMonth = (year: number, month: number): number => {
   return new Date(year, month + 1, 0).getDate();
 }
@@ -124,7 +108,7 @@ export const convertDateToLocalString = (payload: Date): string => {
   const month = payload.getMonth();
   const date = payload.getDate();
 
-  return `${MONTH_MAPPING_SHORT[month]} ${date} ${year}`
+  return `${MONTH_MAPPING_SHORT[month]} ${date}, ${year}`
 }
 
 export const isEndDateAfterStartDate = (startDate: Date, endDate: Date): boolean => {

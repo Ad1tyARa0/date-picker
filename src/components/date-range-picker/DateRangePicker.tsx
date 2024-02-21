@@ -31,13 +31,18 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
 
   const currentDate = new Date();
   const initalEndDate = new Date(currentDate.getTime() + (2 * 24 * 60 * 60 * 1000));
-  
+
   const [startDate, setStartDate] = useState<Date | null>(currentDate);
   const [endDate, setEndDate] = useState<Date | null>(initalEndDate);
   const [startDateSelected, setStartDateSelected] = useState<boolean>(true);
   const [selectedDates, setSelectedDates] = useState<Array<Date>>([]);
-  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const [showCalendar, setShowCalendar] = useState<boolean>(true);
 
+  /**
+   * Calls handlechange function if start or end date changes.
+   * this function returns an array, thr first element of the array if the start and end dates.
+   * the second element is a list of dates that fall on a weekend (Sat or Sun).
+   */
   useEffect(() => {
     if (startDate && endDate) {
       const weekendDates = selectedDates.filter(e => !isWeekday(e));
@@ -46,11 +51,19 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
     };
   }, [startDate, endDate, selectedDates]);
 
+  /**
+   * Calculates selected dates based on start and end dates.
+   */
   useEffect(() => {
     const result = getSelectedDates(startDate, endDate);
     setSelectedDates(result);
   }, [startDate, endDate]);
 
+
+  /**
+   * Checks if start date and end date are out of bounds, 
+   * If they are it simply reverses the dates.
+   */
   useEffect(() => {
     if (startDate && endDate) {
       if (startDate?.getTime() > endDate?.getTime()) {
