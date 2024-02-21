@@ -6,19 +6,37 @@ $css_prefix: ".drp__";
 #{$css_prefix}main{
   display: flex;
   flex-direction: column;
+  box-shadow: 0 0 2px 0 rgba(#000, .2), 0 5px 10px 0 rgba(#000, .1);
+  border-radius: 10px;
+  background-color: $--c-bg-tertiary;
+  padding: 10px;
 }
 
 #{$css_prefix}date-range-container {
   display: flex;
-  border-radius: 10px;
-  background-color: $--c-bg-tertiary;
-  box-shadow: 0 0 2px 0 rgba(#000, .2), 0 5px 10px 0 rgba(#000, .1);
-	// padding: 10px 10px 10px 0;
-  padding: 10px;
 }
 
-#{$css_prefix}date-picker-container {
-  border-right: 1px solid $--c-text-secondary;
+#{$css_prefix}divider {
+  // border-right: 1px solid $--c-text-secondary;
+  margin: 0 15px;
+  width: 1px;
+  background-color: $--c-text-secondary;
+}
+
+#{$css_prefix}date-range-actions {
+  display: flex;
+  margin-top: 15px;
+}
+
+#{$css_prefix}date-range-action-item {
+  // display: flex;
+  padding: 5px 10px;
+  background-color: $--c-bg-secondary;
   margin-right: 10px;
-  padding: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(#000, .1);
+  }
 }

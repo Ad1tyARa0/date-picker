@@ -55,7 +55,7 @@ export const getRange = (start: number, end: number) => {
 export const generateYearOptions = (): DropdownOptionsType[] => {
   const startYear = 1900;
   const currentYear = new Date().getFullYear();
-  const endYear = currentYear + 10;
+  const endYear = currentYear + 100;
   // const maxYear = year + 4;
   const years = Array.from({ length: endYear - startYear + 1 }, (_, index) => startYear + index).map((e: number) => {
     return {
