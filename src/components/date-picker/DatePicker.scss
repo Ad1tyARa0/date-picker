@@ -6,11 +6,6 @@ $css_prefix: ".dp__";
 #{$css_prefix}main {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
-  min-height: 360px;
-  background-color: $--c-bg-tertiary;
-  box-shadow: 0 0 2px 0 rgba(#000, .2), 0 5px 10px 0 rgba(#000, .1);
-	padding: 10px;
 }
 
 #{$css_prefix}header {
@@ -30,9 +25,10 @@ $css_prefix: ".dp__";
 	align-items: center;
 	justify-content: center;
 	border: 0;
-  padding: 11px;
-	background-color:#FFF;
-	border-radius: 10px;
+  padding: 0 5px;
+  padding: 7px;
+	// background-color:#FFF;
+	border-radius: 5px;
 	box-shadow: 0 0 2px 0 rgba(#000,.25), 0 0 10px 0 rgba(#000, .15);
 }
 
@@ -48,11 +44,8 @@ $css_prefix: ".dp__";
   margin-right: 10px;
 }
 
-
-
 #{$css_prefix}select {
-  margin-right: 5px;
-  
+  margin-right: 5px;  
 }
 
 #{$css_prefix}body {
@@ -76,7 +69,7 @@ $css_prefix: ".dp__";
 
 
   border: 0;
-	padding: 10px 5px;
+	margin: 5px 2px;
   border-radius: 6px;
 	font-weight: 600;
 	border: 2px solid transparent;
@@ -91,8 +84,6 @@ $css_prefix: ".dp__";
 }
 
 #{$css_prefix}date-disabled {
-  background-color: $--c-bg-secondary;
-  border-radius: 0;
   color: $--c-text-secondary;
   cursor: not-allowed;
 
@@ -101,6 +92,19 @@ $css_prefix: ".dp__";
     border: none;
     color: $--c-text-secondary;
   }
+}
+
+#{$css_prefix}date-selected {
+  background-color: $--c-theme-primary;
+  color: white;
+
+  &:hover {
+    color: white
+  }
+}
+
+#{$css_prefix}date-highlighted {
+  background-color: $--c-theme-primary-accent;
 }
 
 #{$css_prefix}days {

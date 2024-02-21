@@ -1,13 +1,11 @@
 import './App.scss'
-
+import { DateRangePicker } from './components/date-range-picker/DateRangePicker';
 import './sass/globals.scss';
-
-import { DatePicker } from './components/date-picker/DatePicker'
 
 function App() {
   return (
     <div className='app'>
-      <DatePicker />
+      <DateRangePicker />      
     </div>
   )
 }

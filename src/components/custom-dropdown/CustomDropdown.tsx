@@ -41,7 +41,7 @@ const CustomDropdownComponent: React.FunctionComponent<CustomDropdownProps> = ({
         </div>
 
         <div className={`${css_prefix}header-icon`}>
-          <FaChevronDown />
+          <FaChevronDown fontSize={12} />
         </div>
       </div>
 

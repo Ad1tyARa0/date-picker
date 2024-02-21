@@ -7,18 +7,36 @@ import { FaChevronRight } from "react-icons/fa";
 
 // SCSS.
 import "./DatePicker.scss";
-import { MONTHS, MONTH_MAPPING, MONTH_REVERSE_MAPPING } from "../../utils/constants";
-import { generateMonthOptions, generateYearOptions, getNumberOfDaysInMonth, getRange, getSortedDays, isWeekday } from "../../utils/functions";
+import { MONTH_MAPPING, MONTH_MAPPING_SHORT } from "../../utils/constants";
+import { generateMonthOptions, generateYearOptions, getDate, getNumberOfDaysInMonth, getRange, getSortedDays, isSameDate, isWeekday } from "../../utils/functions";
 import { CustomDropdown } from "../custom-dropdown/CustomDropdown";
 
 const css_prefix = "dp__";
 
 // Component props.
-interface DatePickerProps { }
+interface DatePickerProps {
+  month: number;
+  setMonth: React.Dispatch<React.SetStateAction<number>>;
+  year: number;
+  setYear: React.Dispatch<React.SetStateAction<number>>;
+  startDate: Date | null;
+  endDate: Date | null;
+  handleChangeSelectedDates: (selectedDate: Date) => void;
+  selectedDates: Array<Date>;
+}
 
-const DatePickerComponent: React.FunctionComponent<DatePickerProps> = () => {
-  const [month, setMonth] = useState<number>(new Date().getMonth());
-  const [year, setYear] = useState<number>(new Date().getFullYear());
+const DatePickerComponent: React.FunctionComponent<DatePickerProps> = ({
+  month,
+  setMonth,
+  year,
+  setYear,
+  startDate,
+  endDate,
+  handleChangeSelectedDates,
+  selectedDates,
+}) => {
+  // const [month, setMonth] = useState<number>(new Date().getMonth());
+  // const [year, setYear] = useState<number>(new Date().getFullYear());
 
   const checkIfDateIsWeekday = (date: number): boolean => {
     return isWeekday(new Date(year, month, date));
@@ -56,11 +74,11 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = () => {
     <div className={`${css_prefix}main`}>
       <div className={`${css_prefix}header`}>
         <div className={`${css_prefix}icon`} onClick={onClickPreviousMonth}>
-          <FaChevronLeft />
+          <FaChevronLeft fontSize={12} />
         </div>
 
         <div className={`${css_prefix}month-container`}>
-          <CustomDropdown title={MONTH_MAPPING[month]} value={month} handleChange={handleChangeMonth} options={generateMonthOptions()} />
+          <CustomDropdown title={MONTH_MAPPING_SHORT[month]} value={month} handleChange={handleChangeMonth} options={generateMonthOptions()} />
         </div>
 
         <div className={`${css_prefix}date-container`}>
@@ -68,7 +86,7 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = () => {
         </div>
 
         <div className={`${css_prefix}icon`} onClick={onClickNextMonth}>
-          <FaChevronRight />
+          <FaChevronRight fontSize={12} />
         </div>
       </div>
 
@@ -76,7 +94,7 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = () => {
         <div className={`${css_prefix}calendar`}>
           {getSortedDays(year, month).map((e) => {
             return (
-              <div className={`${css_prefix}days`}>
+              <div key={e} className={`${css_prefix}days`}>
                 {e}
               </div>
             )
@@ -85,10 +103,30 @@ const DatePickerComponent: React.FunctionComponent<DatePickerProps> = () => {
 
         <div className={`${css_prefix}calendar`}>
           {getRange(1, getNumberOfDaysInMonth(year, month) + 1).map((e) => {
-            const checkWeekday = checkIfDateIsWeekday(e); 
-            
+            const checkWeekday = checkIfDateIsWeekday(e);
+            const date = getDate(year, month, e)
+            let isSameStart = false;
+            let isSameEnd = false;
+
+            if (startDate) {
+              isSameStart = isSameDate(date, startDate);
+            }
+
+            if (endDate) {
+              isSameEnd = isSameDate(date, endDate);
+            }
+
             return (
-              <div onClick={() => checkIfDateIsWeekday(e)} className={`${css_prefix}date ${!checkWeekday ? css_prefix + 'date-disabled' : ''}`}>
+              <div
+                key={e}
+                onClick={() => handleChangeSelectedDates(date)} 
+                className={`${css_prefix}date 
+                  ${!checkWeekday ? css_prefix + 'date-disabled' : ''}
+                  ${isSameStart || isSameEnd ? css_prefix + 'date-selected' : ''}
+                  ${isSameEnd ? css_prefix + 'date-selected' : ''}
+                  ${selectedDates.some(e => e.getTime() === date.getTime()) && date > startDate! && date < endDate! && isWeekday(date) ? css_prefix + 'date-highlighted' : ''}
+                `}
+              >
                 {e}
               </div>
             )

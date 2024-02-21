@@ -75,3 +75,15 @@ export const generateMonthOptions = (): DropdownOptionsType[] => {
     }
   })
 }
+
+export const getDate = (year: number, month: number, day: number): Date => {
+  return new Date(year, month, day);
+} 
+
+export const isSameDate = (date1: Date, date2: Date): boolean => {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
