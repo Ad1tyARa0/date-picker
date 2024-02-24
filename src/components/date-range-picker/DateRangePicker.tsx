@@ -29,8 +29,12 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [secondYear, setSecondYear] = useState<number>(new Date().getFullYear());
 
-  const currentDate = new Date();
-  const initalEndDate = new Date(currentDate.getTime() + (2 * 24 * 60 * 60 * 1000));
+  let currentDate = new Date();
+  let initalEndDate = new Date(currentDate.getTime() + (2 * 24 * 60 * 60 * 1000));
+
+  if (!isWeekday(currentDate)) {
+    currentDate = new Date(currentDate.getTime() - (2 * 24 * 60 * 60 * 1000));
+  }
 
   const [startDate, setStartDate] = useState<Date | null>(currentDate);
   const [endDate, setEndDate] = useState<Date | null>(initalEndDate);
@@ -84,7 +88,12 @@ const DateRangePickerComponent: React.FunctionComponent<DateRangePickerProps> = 
   };
 
   const handleClickDateRangeActionButtons = (payload: number) => {
-    const currentDate = new Date();
+    let currentDate = new Date();
+    
+    if (!isWeekday(currentDate)) {
+      return;
+    }
+
     const newDate = new Date(currentDate);
     const resultDate = new Date(newDate.setDate(currentDate.getDate() - payload));
     setStartDate(resultDate);
